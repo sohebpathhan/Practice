@@ -2,7 +2,7 @@ deployment and integration of erp for student
 
 
    ,     #_
-   ~\_  ####_        Amazon Linux 2023
+   ~\_  ####_        Amazon Linux 202344
   ~~  \_#####\
   ~~     \###|
   ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
