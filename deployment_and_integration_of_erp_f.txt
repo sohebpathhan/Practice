@@ -1,0 +1,266 @@
+deployment and integration of erp for student
+
+
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Sun Oct  5 08:20:00 2025 from 35.183.92.180
+[ec2-user@ip-172-31-13-81 ~]$ sudo -i
+[root@ip-172-31-13-81 ~]# ls
+apache-tomcat-9.0.109  apache-tomcat-9.0.109.tar.gz
+[root@ip-172-31-13-81 ~]# cd apache-tomcat-9.0.109
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# wget https://artifact-009988.s3.us-east-2.amazonaws.com/mysql-connector.jar
+--2025-10-05 09:11:09--  https://artifact-009988.s3.us-east-2.amazonaws.com/mysql-connector.jar
+Resolving artifact-009988.s3.us-east-2.amazonaws.com (artifact-009988.s3.us-east-2.amazonaws.com)... 52.219.176.58, 52.219.98.66, 3.5.129.102, ...
+Connecting to artifact-009988.s3.us-east-2.amazonaws.com (artifact-009988.s3.us-east-2.amazonaws.com)|52.219.176.58|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1007502 (984K) [application/x-java-archive]
+Saving to: ‘mysql-connector.jar’
+
+mysql-connector.jar                       100%[====================================================================================>] 983.89K  5.20MB/s    in 0.2s    
+
+2025-10-05 09:11:09 (5.20 MB/s) - ‘mysql-connector.jar’ saved [1007502/1007502]
+
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# wget https://artifact-009988.s3.us-east-2.amazonaws.com/student.war
+--2025-10-05 09:11:59--  https://artifact-009988.s3.us-east-2.amazonaws.com/student.war
+Resolving artifact-009988.s3.us-east-2.amazonaws.com (artifact-009988.s3.us-east-2.amazonaws.com)... 16.12.66.10, 3.5.131.215, 52.219.178.226, ...
+Connecting to artifact-009988.s3.us-east-2.amazonaws.com (artifact-009988.s3.us-east-2.amazonaws.com)|16.12.66.10|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 89423 (87K) [application/x-www-form-urlencoded]
+Saving to: ‘student.war’
+
+student.war                               100%[====================================================================================>]  87.33K  --.-KB/s    in 0.05s   
+
+2025-10-05 09:12:00 (1.68 MB/s) - ‘student.war’ saved [89423/89423]
+
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  mysql-connector.jar  student.war  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# mv student.war webapps/
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# mv mysql-connector.jar lib/
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls webapps
+ROOT  docs  examples  host-manager  manager  student.war
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls lib
+annotations-api.jar       catalina-tribes.jar  jasper.jar           tomcat-api.jar         tomcat-i18n-de.jar  tomcat-i18n-pt-BR.jar  tomcat-util-scan.jar
+catalina-ant.jar          catalina.jar         jaspic-api.jar       tomcat-coyote-ffm.jar  tomcat-i18n-es.jar  tomcat-i18n-ru.jar     tomcat-util.jar
+catalina-ha.jar           ecj-4.20.jar         jsp-api.jar          tomcat-coyote.jar      tomcat-i18n-fr.jar  tomcat-i18n-zh-CN.jar  tomcat-websocket.jar
+catalina-ssi.jar          el-api.jar           mysql-connector.jar  tomcat-dbcp.jar        tomcat-i18n-ja.jar  tomcat-jdbc.jar        websocket-api.jar
+catalina-storeconfig.jar  jasper-el.jar        servlet-api.jar      tomcat-i18n-cs.jar     tomcat-i18n-ko.jar  tomcat-jni.jar
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# cd bin
+[root@ip-172-31-13-81 bin]# ls
+bootstrap.jar       catalina.sh  commons-daemon-native.tar.gz  configtest.sh  digest.sh     setclasspath.bat  shutdown.sh  tomcat-juli.jar       tool-wrapper.sh
+catalina-tasks.xml  ciphers.bat  commons-daemon.jar            daemon.sh      makebase.bat  setclasspath.sh   startup.bat  tomcat-native.tar.gz  version.bat
+catalina.bat        ciphers.sh   configtest.bat                digest.bat     makebase.sh   shutdown.bat      startup.sh   tool-wrapper.bat      version.sh
+[root@ip-172-31-13-81 bin]# ./catalina.sh start
+Using CATALINA_BASE:   /root/apache-tomcat-9.0.109
+Using CATALINA_HOME:   /root/apache-tomcat-9.0.109
+Using CATALINA_TMPDIR: /root/apache-tomcat-9.0.109/temp
+Using JRE_HOME:        /usr
+Using CLASSPATH:       /root/apache-tomcat-9.0.109/bin/bootstrap.jar:/root/apache-tomcat-9.0.109/bin/tomcat-juli.jar
+Using CATALINA_OPTS:   
+Tomcat started.
+[root@ip-172-31-13-81 bin]# mysql -u admin -h database-1.c9wwwm8i6vdd.ca-central-1.rds.amazonaws.com -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 106
+Server version: 11.4.5-MariaDB-log managed by https://aws.amazon.com/rds/
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| innodb             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.011 sec)
+
+MariaDB [(none)]> create database studentapp;
+Query OK, 1 row affected (0.008 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| innodb             |
+| mysql              |
+| performance_schema |
+| studentapp         |
+| sys                |
++--------------------+
+6 rows in set (0.002 sec)
+
+MariaDB [(none)]> use studentapp;
+Database changed
+MariaDB [studentapp]> CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,
+    ->     student_name VARCHAR(100) NOT NULL,
+    ->     student_addr VARCHAR(100) NOT NULL,
+    ->     student_age VARCHAR(3) NOT NULL,
+    ->     student_qual VARCHAR(20) NOT NULL,
+    ->     student_percent VARCHAR(10) NOT NULL,
+    ->     student_year_passed VARCHAR(10) NOT NULL,
+    ->     PRIMARY KEY (student_id)
+    -> );
+Query OK, 0 rows affected (0.047 sec)
+
+MariaDB [studentapp]> describe students;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| student_id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| student_name        | varchar(100) | NO   |     | NULL    |                |
+| student_addr        | varchar(100) | NO   |     | NULL    |                |
+| student_age         | varchar(3)   | NO   |     | NULL    |                |
+| student_qual        | varchar(20)  | NO   |     | NULL    |                |
+| student_percent     | varchar(10)  | NO   |     | NULL    |                |
+| student_year_passed | varchar(10)  | NO   |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.010 sec)
+
+MariaDB [studentapp]> how table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'how table' at line 1
+MariaDB [studentapp]> show tables
+    -> ;
++----------------------+
+| Tables_in_studentapp |
++----------------------+
+| students             |
++----------------------+
+1 row in set (0.002 sec)
+
+MariaDB [studentapp]> exit
+Bye
+[root@ip-172-31-13-81 bin]# cd ../conf
+[root@ip-172-31-13-81 conf]# ls
+Catalina         catalina.properties  jaspic-providers.xml  logging.properties  tomcat-users.xml  web.xml
+catalina.policy  context.xml          jaspic-providers.xsd  server.xml          tomcat-users.xsd
+[root@ip-172-31-13-81 conf]# vim context.xml
+[root@ip-172-31-13-81 conf]# cd ../bin
+[root@ip-172-31-13-81 bin]# ./catalina.sh start
+Using CATALINA_BASE:   /root/apache-tomcat-9.0.109
+Using CATALINA_HOME:   /root/apache-tomcat-9.0.109
+Using CATALINA_TMPDIR: /root/apache-tomcat-9.0.109/temp
+Using JRE_HOME:        /usr
+Using CLASSPATH:       /root/apache-tomcat-9.0.109/bin/bootstrap.jar:/root/apache-tomcat-9.0.109/bin/tomcat-juli.jar
+Using CATALINA_OPTS:   
+Tomcat started.
+[root@ip-172-31-13-81 bin]# cd ..
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# cd conf
+[root@ip-172-31-13-81 conf]# ls
+Catalina         catalina.properties  jaspic-providers.xml  logging.properties  tomcat-users.xml  web.xml
+catalina.policy  context.xml          jaspic-providers.xsd  server.xml          tomcat-users.xsd
+[root@ip-172-31-13-81 conf]# vim context.xml
+[root@ip-172-31-13-81 conf]# cd ..
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+[root@ip-172-31-13-81 apache-tomcat-9.0.109]# cd bin
+[root@ip-172-31-13-81 bin]# ls
+bootstrap.jar       catalina.sh  commons-daemon-native.tar.gz  configtest.sh  digest.sh     setclasspath.bat  shutdown.sh  tomcat-juli.jar       tool-wrapper.sh
+catalina-tasks.xml  ciphers.bat  commons-daemon.jar            daemon.sh      makebase.bat  setclasspath.sh   startup.bat  tomcat-native.tar.gz  version.bat
+catalina.bat        ciphers.sh   configtest.bat                digest.bat     makebase.sh   shutdown.bat      startup.sh   tool-wrapper.bat      version.sh
+[root@ip-172-31-13-81 bin]# ./catalina.sh start
+Using CATALINA_BASE:   /root/apache-tomcat-9.0.109
+Using CATALINA_HOME:   /root/apache-tomcat-9.0.109
+Using CATALINA_TMPDIR: /root/apache-tomcat-9.0.109/temp
+Using JRE_HOME:        /usr
+Using CLASSPATH:       /root/apache-tomcat-9.0.109/bin/bootstrap.jar:/root/apache-tomcat-9.0.109/bin/tomcat-juli.jar
+Using CATALINA_OPTS:   
+Tomcat started.
+[root@ip-172-31-13-81 bin]# cd
+[root@ip-172-31-13-81 ~]# mysql
+mysql                       mysql_plugin                mysql_waitpid               mysqld                      mysqldumpslow
+mysql_convert_table_format  mysql_secure_installation   mysqlaccess                 mysqld_multi                mysqlhotcopy
+mysql_find_rows             mysql_setpermission         mysqladmin                  mysqld_safe                 mysqlimport
+mysql_fix_extensions        mysql_tzinfo_to_sql         mysqlbinlog                 mysqld_safe_helper          mysqlshow
+mysql_install_db            mysql_upgrade               mysqlcheck                  mysqldump                   mysqlslap
+[root@ip-172-31-13-81 ~]# mysql
+mysql                       mysql_plugin                mysql_waitpid               mysqld                      mysqldumpslow
+mysql_convert_table_format  mysql_secure_installation   mysqlaccess                 mysqld_multi                mysqlhotcopy
+mysql_find_rows             mysql_setpermission         mysqladmin                  mysqld_safe                 mysqlimport
+mysql_fix_extensions        mysql_tzinfo_to_sql         mysqlbinlog                 mysqld_safe_helper          mysqlshow
+mysql_install_db            mysql_upgrade               mysqlcheck                  mysqldump                   mysqlslap
+[root@ip-172-31-13-81 ~]# mysql
+mysql                       mysql_plugin                mysql_waitpid               mysqld                      mysqldumpslow
+mysql_convert_table_format  mysql_secure_installation   mysqlaccess                 mysqld_multi                mysqlhotcopy
+mysql_find_rows             mysql_setpermission         mysqladmin                  mysqld_safe                 mysqlimport
+mysql_fix_extensions        mysql_tzinfo_to_sql         mysqlbinlog                 mysqld_safe_helper          mysqlshow
+mysql_install_db            mysql_upgrade               mysqlcheck                  mysqldump                   mysqlslap
+[root@ip-172-31-13-81 ~]# mysql -u admin -h database-1.c9wwwm8i6vdd.ca-central-1.rds.amazonaws.com -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 147
+Server version: 11.4.5-MariaDB-log managed by https://aws.amazon.com/rds/
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| innodb             |
+| mysql              |
+| performance_schema |
+| studentapp         |
+| sys                |
++--------------------+
+6 rows in set (0.005 sec)
+
+MariaDB [(none)]> use studentapp
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [studentapp]> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [studentapp]> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database' at line 1
+MariaDB [studentapp]> show tables;
++----------------------+
+| Tables_in_studentapp |
++----------------------+
+| students             |
++----------------------+
+1 row in set (0.002 sec)
+
+MariaDB [studentapp]> select * from Tables_in_studentapp
+    -> ;
+ERROR 1146 (42S02): Table 'studentapp.Tables_in_studentapp' doesn't exist
+MariaDB [studentapp]> select * from students
+    -> ;
++------------+--------------+--------------+-------------+--------------+-----------------+---------------------+
+| student_id | student_name | student_addr | student_age | student_qual | student_percent | student_year_passed |
++------------+--------------+--------------+-------------+--------------+-----------------+---------------------+
+|          1 | jshoheb      | asdsa        | 32          | ba           | 90              | 2026                |
++------------+--------------+--------------+-------------+--------------+-----------------+---------------------+
+1 row in set (0.005 sec)
+
+MariaDB [studentapp]> exit
+Bye
+[root@ip-172-31-13-81 ~]# 
